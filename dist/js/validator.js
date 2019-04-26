@@ -4,27 +4,46 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var validator = function validator(selector) {
+var validator = //when creating a class there is no classwide variable. 
+//class-wide variables are created by assigning it to *this* (i.e this.$form)
+//this is the first function called wen the the class is instantiated (created) in main.js
+function validator(formSelector, inputSelector) {
   var _this = this;
 
   _classCallCheck(this, validator);
 
-  _defineProperty(this, "formSubmitListener", function (event) {
-    console.log('formSubmitListener', event);
+  _defineProperty(this, "setupListeners", function () {
+    console.log('setupListeners', _this.$input);
+
+    _this.$form.addEventListener('submit', _this.formSubmitListener);
+
+    _this.$input.addEventListener('keyup', _this.easterEggListener); //when keyup happens, call this function
+
   });
 
-  _defineProperty(this, "setupListeners", function () {
-    console.log('setupListeners', _this, _this.$form);
+  _defineProperty(this, "formSubmitListener", function (aDomEvent) {
+    console.log('formSubmitListener', aDomEvent);
+    aDomEvent.preventDefault();
+  });
 
-    _this.$form.addEventListener('sumbit', _this.formSubmitListerner);
+  _defineProperty(this, "easterEggListener", function (anotherDomEvent) {
+    var secretCode = 'puppies';
+    console.log('easterEggListener is present:', anotherDomEvent, secretCode);
+
+    if (_this.$input.value === secretCode) {
+      console.log('the world is quiet here');
+    }
   });
 
   //confirms the selector that this validator is using for output
-  console.log('validator has been constructed! for:', selector); // store a refrence to our DOM element as this.$form
+  console.log('validator has been constructed! for:', formSelector, inputSelector); // store a refrence to our DOM element as this.$form
   //this.$form becomes a classwide variable when attached to *this*
-  //so we can use it elsewhere inside THIS class / instance 
+  //so we can use it elsewhere inside THIS class (class validator) / instance 
 
-  this.$form = document.querySelector(selector);
+  this.$form = document.querySelector(formSelector);
+  this.$input = document.querySelector(inputSelector);
   this.setupListeners();
-}; //
+} // this is thr first method called in the construcor
+//so this is our next line for our logic flow
+;
 //# sourceMappingURL=validator.js.map
