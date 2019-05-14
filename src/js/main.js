@@ -7,4 +7,12 @@ console.log(`Hello Chello, input validation.`);
 //'[name='inputName']' for specific input attributes (wrapped in '[square brackets in string]')
 //inputName is the value of name attribute.
 
-const isValid = new validator('.puppyForm', '[name=puppyName');
+// const isValid = new validator('.puppyForm', '[name=puppyName');
+
+
+let userCode = {
+   secretCode: 'bumble',
+   backgroundColor: 'pink'
+}
+
+const isValidtoo = new validator ('.puppyForm','[name=puppyName]', userCode);

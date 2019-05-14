@@ -7,7 +7,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var validator = //when creating a class there is no classwide variable. 
 //class-wide variables are created by assigning it to *this* (i.e this.$form)
 //this is the first function called wen the the class is instantiated (created) in main.js
-function validator(formSelector, inputSelector) {
+function validator(formSelector, inputSelector, userCode) {
   var _this = this;
 
   _classCallCheck(this, validator);
@@ -27,12 +27,19 @@ function validator(formSelector, inputSelector) {
   });
 
   _defineProperty(this, "easterEggListener", function (anotherDomEvent) {
-    var secretCode = 'puppies';
-    console.log('easterEggListener is present:', anotherDomEvent, secretCode);
+    var hoverBox = document.querySelector('.secret-box');
+    console.log('easterEggListener is present:', anotherDomEvent, _this.userCode);
 
-    if (_this.$input.value === secretCode) {
-      console.log('the world is quiet here');
+    if (_this.$input.value === _this.userCode) {
+      hoverBox.style.visibility = 'visible';
+      hoverBox.style.position = 'absolute';
+      hoverBox.innerHTML += " " + _this.userCode;
+      hoverBox.style.backgroundColor = _this.backgroundColor;
     }
+
+    setTimeout(function () {
+      hoverBox.style.visibility = 'hidden';
+    }, 3000);
   });
 
   //confirms the selector that this validator is using for output
@@ -42,8 +49,15 @@ function validator(formSelector, inputSelector) {
 
   this.$form = document.querySelector(formSelector);
   this.$input = document.querySelector(inputSelector);
+  this.userCode = 'puppies';
+  this.backgroundColor = 'orange';
   this.setupListeners();
-} // this is thr first method called in the construcor
+
+  if (userCode != undefined) {
+    this.userCode = userCode.secretCode;
+    this.backgroundColor = userCode.backgroundColor;
+  }
+} // this is the first method called in the construcor
 //so this is our next line for our logic flow
 ;
 //# sourceMappingURL=validator.js.map
